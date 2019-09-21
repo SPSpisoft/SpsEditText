@@ -6,6 +6,7 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -14,6 +15,7 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -26,6 +28,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.github.johnkil.print.PrintView;
 import com.google.android.material.snackbar.Snackbar;
@@ -55,25 +58,26 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
 
     public SpsEditText(Context context) {
         super(context);
-        init(context);
+        init(context, null);
     }
 
     public SpsEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init(context, attrs);
     }
 
     public SpsEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        init(context, attrs);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public SpsEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs);
     }
 
-    private void init(final Context context){
+    private void init(final Context context, AttributeSet attrs){
 
         mContext = context;
         TF_Holo = Typeface.createFromAsset(context.getAssets(), "holo-icon-font.ttf" + "");
@@ -129,6 +133,20 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
                 context.startActivity(intentQR, ActivityOptions.makeCustomAnimation(context, R.anim.animate_zoom_enter, R.anim.animate_zoom_exit).toBundle());
             }
         });
+
+        //        int textColor = ContextCompat.getColor(context, R.color.color_text);
+        if (attrs != null) {
+            // Attribute initialization
+            final TypedArray a = context.obtainStyledAttributes(attrs,
+                    R.styleable.MyCustomElement, 0, 0);
+
+            //Use a
+            Log.i("test",a.getString(R.styleable.MyCustomElement_TextHint));
+
+            MText.setHint(a.getString(R.styleable.MyCustomElement_TextHint));
+            //Don't forget this
+            a.recycle();
+        }
     }
 
     private void promptSpeechInput(Context context) {

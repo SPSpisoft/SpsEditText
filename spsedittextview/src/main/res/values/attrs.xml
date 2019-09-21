@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyCustomElement">
+        <attr name="TextHint" format="string"/>
+    </declare-styleable>
+
+<!--    <declare-styleable name="MyCustomView">-->
+<!--        <attr name="android:text"/>-->
+<!--        <attr name="android:textColor"/>-->
+<!--        <attr name="extraInformation" format="string" />-->
+<!--    </declare-styleable>-->
+</resources>
