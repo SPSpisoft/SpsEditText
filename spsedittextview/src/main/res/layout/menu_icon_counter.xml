@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/counterPanel"
+    android:layout_width="2dp"
+    android:layout_height="2dp">
+
+    <RelativeLayout
+        android:id="@+id/counterValuePanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="false"
+            android:layout_margin="5dp"
+            android:layout_centerInParent="true"
+            tools:ignore="MissingConstraints"
+            tools:srcCompat="@android:drawable/ic_popup_sync" />
+
+        <RelativeLayout
+            android:id="@+id/ivRly"
+            android:layout_width="@dimen/sps_lpr_sz_30"
+            android:layout_height="@dimen/sps_lpr_sz_30"
+            android:layout_alignTop="@+id/ivIcon"
+            android:layout_alignEnd="@+id/ivIcon"
+            android:layout_marginTop="-5dp"
+            android:layout_marginEnd="-5dp">
+
+            <com.github.johnkil.print.PrintView
+                android:id="@+id/ivCircle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                app:iconColor="#ff0000"
+                app:iconSize="@dimen/sps_lpr_sz_25"
+                app:iconText="@string/ic_check_circle_blank" />
+
+            <TextView
+                android:id="@+id/ivText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="8"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sps_txt_sz_18" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</FrameLayout>

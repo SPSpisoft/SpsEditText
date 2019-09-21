@@ -1,0 +1,42 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+    <!-- Language -->
+    <string-array name="language_entries">
+        <item>English</item>
+        <item>فارسی</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>en</item>
+        <item>fa</item>
+    </string-array>
+
+    <string-array name="language_country">
+        <item>US</item>
+        <item>IR</item>
+    </string-array>
+
+    <!-- Calender -->
+    <string-array name="calender_entries">
+        <item>AD Calender</item>
+        <item>تقویم ایرانی</item>
+        <item>التقویم العربی</item>
+    </string-array>
+
+    <string-array name="calender_values">
+        <item>AD</item>
+        <item>IR</item>
+        <item>AR</item>
+    </string-array>
+
+</resources>

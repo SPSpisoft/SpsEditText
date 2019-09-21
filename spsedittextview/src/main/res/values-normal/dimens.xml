@@ -1,0 +1,55 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="app_bar_height">200dp</dimen>
+    <dimen name="item_width">200dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_list_height">50dp</dimen>
+    <dimen name="nav_header_list_vertical_spacing">2dp</dimen>
+    <dimen name="activity_horizontal_margin_min">6dp</dimen>
+    <dimen name="activity_vertical_margin_min">6dp</dimen>
+
+
+    <dimen name="sps_down_counter_width">70dp</dimen>
+    <dimen name="sps_range_date_width">150dp</dimen>
+    <dimen name="sps_value_space">110dp</dimen>
+    <dimen name="sps_txt_size_little">10dp</dimen>
+
+    <dimen name="sps_lpr_sz_14">14dp</dimen>
+    <dimen name="sps_lpr_sz_16">16dp</dimen>
+    <dimen name="sps_lpr_sz_18">18dp</dimen>
+    <dimen name="sps_lpr_sz_25">25dp</dimen>
+    <dimen name="sps_lpr_sz_20">20dp</dimen>
+    <dimen name="sps_lpr_sz_30">30dp</dimen>
+    <dimen name="sps_lpr_sz_40">40dp</dimen>
+    <dimen name="sps_lpr_sz_50">50dp</dimen>
+    <dimen name="sps_lpr_sz_60">60dp</dimen>
+    <dimen name="sps_lpr_sz_70">70dp</dimen>
+    <dimen name="sps_lpr_sz_80">80dp</dimen>
+    <dimen name="sps_lpr_sz_90">90dp</dimen>
+    <dimen name="sps_lpr_sz_100">100dp</dimen>
+    <dimen name="sps_lpr_sz_250">250dp</dimen>
+
+    <dimen name="sps_txt_sz_6" tools:ignore="MissingDefaultResource">6sp</dimen>
+    <dimen name="sps_txt_sz_8" tools:ignore="MissingDefaultResource">8sp</dimen>
+    <dimen name="sps_txt_sz_10" tools:ignore="MissingDefaultResource">10sp</dimen>
+    <dimen name="sps_txt_sz_12" tools:ignore="MissingDefaultResource">12sp</dimen>
+    <dimen name="sps_txt_sz_14" tools:ignore="MissingDefaultResource">14sp</dimen>
+    <dimen name="sps_txt_sz_16">16dip</dimen>
+    <dimen name="sps_txt_sz_18">18dip</dimen>
+    <dimen name="sps_txt_sz_20">20dip</dimen>
+    <dimen name="sps_txt_sz_22">22dip</dimen>
+    <dimen name="sps_lpr_150">150dp</dimen>
+    <dimen name="sps_lpr_5">5dp</dimen>
+    <dimen name="sps_lpr_7">7dp</dimen>
+    <dimen name="sps_lpr_10">10dp</dimen>
+    <dimen name="sps_txt_sz_40">40dip</dimen>
+
+</resources>

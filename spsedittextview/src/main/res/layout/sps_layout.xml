@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/rlyTop"
+    android:layout_margin="@dimen/sps_lpr_10"
+    android:padding="@dimen/sps_lpr_5"
+    android:background="@drawable/background_button_shape_2"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/sps_lpr_sz_60"
+    tools:ignore="MissingConstraints"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ProgressBar
+        android:id="@+id/cProgress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:foregroundGravity="top"
+        android:progress="70"
+        android:indeterminateDrawable="@drawable/progress_indeterminate"
+        android:progressDrawable="@drawable/progress_green"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/mText"
+        android:textSize="@dimen/sps_txt_sz_16"
+        android:inputType="text"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/rlyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+        android:id="@+id/rlyBtn"
+        android:orientation="horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/mCnt"
+            android:textColor="@color/colorAccent"
+            android:text=""
+            android:layout_toStartOf="@+id/rlyBtn"
+            android:layout_alignParentEnd="true"
+            android:paddingStart="@dimen/sps_lpr_5"
+            android:paddingEnd="@dimen/sps_lpr_5"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <com.github.johnkil.print.PrintView
+            android:id="@+id/iSearch"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:paddingStart="@dimen/sps_lpr_5"
+            android:paddingEnd="@dimen/sps_lpr_5"
+            app:iconColor="@android:color/darker_gray"
+            app:iconSize="@dimen/sps_lpr_sz_30"
+            app:iconText="@string/ic_holo_search" />
+
+        <com.github.johnkil.print.PrintView
+            android:id="@+id/iVoice"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:paddingStart="@dimen/sps_lpr_5"
+            android:paddingEnd="@dimen/sps_lpr_5"
+            app:iconColor="@android:color/darker_gray"
+            app:iconSize="@dimen/sps_lpr_sz_30"
+            app:iconText="@string/ic_holo_mic" />
+
+        <!--<com.github.johnkil.print.PrintView-->
+        <!--android:id="@+id/iQr"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:paddingStart="@dimen/sps_lpr_5"-->
+        <!--android:paddingEnd="@dimen/sps_lpr_5"-->
+        <!--app:iconColor="@android:color/darker_gray"-->
+        <!--app:iconSize="@dimen/sps_lpr_sz_30"-->
+        <!--app:iconText="@string/ic_holo_camera" />-->
+
+        <ImageView
+            android:id="@+id/iQr"
+            android:src="@drawable/ic_action_qr_code"
+            android:layout_gravity="center"
+            android:paddingStart="@dimen/sps_lpr_5"
+            android:paddingEnd="@dimen/sps_lpr_5"
+            android:layout_width="@dimen/sps_lpr_sz_30"
+            android:layout_height="@dimen/sps_lpr_sz_30" />
+
+    </LinearLayout>
+
+    <!--<ImageView-->
+    <!--android:id="@+id/mButton"-->
+    <!--android:src="@android:drawable/ic_search_category_default"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--tools:text="search" />-->
+
+</RelativeLayout>

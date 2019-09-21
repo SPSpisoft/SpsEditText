@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <cn.bingoogolapple.qrcode.zxing.ZXingView
+      android:id="@+id/zbarview"
+      style="@style/MatchMatch"
+      app:qrcv_animTime="2000"
+      app:qrcv_barcodeRectHeight="@dimen/sps_lpr_sz_250"
+      app:qrcv_borderColor="@android:color/white"
+      app:qrcv_borderSize="1dp"
+      app:qrcv_cornerColor="@color/colorPrimaryDark"
+      app:qrcv_cornerLength="20dp"
+      app:qrcv_cornerSize="3dp"
+      app:qrcv_customGridScanLineDrawable="@drawable/custom_grid_scan_line"
+      app:qrcv_isAutoZoom="false"
+      app:qrcv_isBarcode="false"
+      app:qrcv_isOnlyDecodeScanBoxArea="false"
+      app:qrcv_isShowDefaultGridScanLineDrawable="true"
+      app:qrcv_isShowDefaultScanLineDrawable="true"
+      app:qrcv_isShowLocationPoint="true"
+      app:qrcv_isShowTipBackground="true"
+      app:qrcv_isShowTipTextAsSingleLine="false"
+      app:qrcv_isTipTextBelowRect="false"
+      app:qrcv_maskColor="#33FFFFFF"
+      app:qrcv_rectWidth="@dimen/sps_lpr_sz_250"
+      app:qrcv_scanLineColor="@color/colorPrimaryDark"
+      app:qrcv_toolbarHeight="56dp"
+      app:qrcv_topOffset="80dp"
+      app:qrcv_verticalBias="-1" />
+
+  <!--<com.spisoft.arasorder.functions.PointsOverlayView-->
+      <!--android:id="@+id/points_overlay_view"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="match_parent"-->
+      <!--/>-->
+
+  <!--<TextView-->
+      <!--android:background="#55000000"-->
+      <!--android:id="@+id/result_text_view"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:gravity="center"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:layout_alignParentTop="true"-->
+      <!--android:layout_centerHorizontal="true"-->
+      <!--android:padding="16dp"-->
+      <!--android:textSize="18sp"-->
+      <!--android:textColor="#ffffff"-->
+      <!--/>-->
+
+  <LinearLayout
+      android:visibility="gone"
+      android:orientation="vertical"
+      android:layout_centerHorizontal="true"
+      android:id="@+id/llyShow"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <TextView
+        android:background="#55000000"
+        android:id="@+id/txt_name"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="@dimen/sps_txt_sz_18"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:background="#55000000"
+        android:id="@+id/txt_price"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="@dimen/sps_txt_sz_18"
+        android:textColor="#ffffff" />
+  </LinearLayout>
+
+  <!--<LinearLayout-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:layout_alignParentBottom="true"-->
+      <!--android:orientation="vertical">-->
+
+    <!--<CheckBox-->
+        <!--android:background="#99000000"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="On/Off QR decoding"-->
+        <!--android:layout_above="@+id/flashlight_checkbox"-->
+        <!--android:textSize="@dimen/sps_lpr_sz_14"-->
+        <!--android:padding="16dp"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:id="@+id/enable_decoding_checkbox"-->
+        <!--android:checked="true"-->
+        <!--/>-->
+
+    <!--<CheckBox-->
+        <!--android:background="#99000000"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Get One"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:textSize="@dimen/sps_lpr_sz_14"-->
+        <!--android:padding="16dp"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:id="@+id/enable_decoding_one"-->
+        <!--android:checked="false"-->
+        <!--/>-->
+
+    <!--<CheckBox-->
+        <!--android:background="#99000000"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="On/Off flashlight"-->
+        <!--android:textSize="@dimen/sps_lpr_sz_14"-->
+        <!--android:padding="16dp"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:id="@+id/flashlight_checkbox"-->
+        <!--android:checked="false"-->
+        <!--/>-->
+  <!--</LinearLayout>-->
+  <!--<TextView-->
+  <!--android:id="@+id/etBarcode"-->
+  <!--android:layout_above="@+id/enable_decoding_checkbox"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="wrap_content" />-->
+
+</RelativeLayout>
