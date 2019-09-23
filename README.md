@@ -3,7 +3,7 @@ android EditText
 an android customize edittext with input voice/qrcode/barcode
 
 
-allprojects {
+	allprojects {
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }
