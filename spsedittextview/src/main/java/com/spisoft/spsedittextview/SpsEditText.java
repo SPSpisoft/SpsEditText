@@ -243,6 +243,10 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
     }
     //-------------------------------- Function Attributes
 
+    public String GetText(){
+        return MText.getText().toString();
+    }
+
     public void SetHint(String mHint){
         MText.setHint(mHint);
     }
