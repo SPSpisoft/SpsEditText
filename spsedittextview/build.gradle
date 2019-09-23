@@ -38,4 +38,5 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-baseadapter:1.2.9@aar'
     implementation 'cn.bingoogolapple:bga-flowlayout:1.0.0@aar'
     implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.karumi:dexter:6.0.0'
 }

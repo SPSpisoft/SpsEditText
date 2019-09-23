@@ -9,6 +9,7 @@ import android.hardware.Camera;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,19 +23,22 @@ import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
 import static com.spisoft.spsedittextview.GlobalCls.buildCounterRecDrawable;
+import static com.spisoft.spsedittextview.SpsEditText.RsultQrCode;
 import static com.spisoft.spsedittextview.SpsEditText.TF_Holo;
+import static com.spisoft.spsedittextview.SpsEditText.activityResult;
 
 
-public class QrCodeActivity extends AppCompatActivity
-        implements ActivityCompat.OnRequestPermissionsResultCallback, QRCodeView.Delegate {
+public class QrCodeActivity extends AppCompatActivity implements QRCodeView.Delegate {
 
     private static final int MY_PERMISSION_REQUEST_CAMERA = 0;
-    private static final int REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY = 666;
+    private static final int REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY = 777;
 
     private ViewGroup mainLayout;
     private MenuItem flashSwitchItem, cameraSwitchItem;
@@ -66,32 +70,13 @@ public class QrCodeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_decoder);
 
-//        if (savedInstanceState == null) {
-//            Intent mIntent = getIntent();
-//            if(mIntent == null) {
-//                _Status_Code = null;
-//            } else {
-//                _Status_Code = mIntent.getStringExtra(EXTRA_STATUS_BARCODE_ACTIVITY);
-//            }
-//        } else {
-//            _Status_Code = savedInstanceState.getString(EXTRA_STATUS_BARCODE_ACTIVITY,"");
-//        }
-//
-//
-//        if(_Status_Code != null){
-//            if(_Status_Code.equals(BARCPDE_READER_PLACE))
-//                setTitle("جانمایی کالا");
-//            if(_Status_Code.equals(BARCPDE_READER_BARCODE))
-//                setTitle("بارکد کالا");
-//        }
-
         mainLayout = (ViewGroup) findViewById(R.id.main_layout);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
             initQRCodeReaderView();
-        } else {
-            requestCameraPermission();
+//        } else {
+//            requestCameraPermission();
         }
     }
 
@@ -138,40 +123,40 @@ public class QrCodeActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode != MY_PERMISSION_REQUEST_CAMERA) {
-            return;
-        }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+//                                           @NonNull int[] grantResults) {
+//        if (requestCode != MY_PERMISSION_REQUEST_CAMERA) {
+//            return;
+//        }
+//
+//        if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            Snackbar.make(mainLayout, "Camera permission was granted.", Snackbar.LENGTH_SHORT).show();
+//            initQRCodeReaderView();
+//        } else {
+//            Snackbar.make(mainLayout, "Camera permission request was denied.", Snackbar.LENGTH_SHORT).show();
+//        }
+//    }
 
-        if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Snackbar.make(mainLayout, "Camera permission was granted.", Snackbar.LENGTH_SHORT).show();
-            initQRCodeReaderView();
-        } else {
-            Snackbar.make(mainLayout, "Camera permission request was denied.", Snackbar.LENGTH_SHORT).show();
-        }
-    }
-
-    private void requestCameraPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-            Snackbar.make(mainLayout, "Camera access is required to display the camera preview.",
-                    Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ActivityCompat.requestPermissions(QrCodeActivity.this, new String[] {
-                            Manifest.permission.CAMERA
-                    }, MY_PERMISSION_REQUEST_CAMERA);
-                }
-            }).show();
-        } else {
-            Snackbar.make(mainLayout, "Permission is not available. Requesting camera permission.",
-                    Snackbar.LENGTH_SHORT).show();
-            ActivityCompat.requestPermissions(this, new String[] {
-                    Manifest.permission.CAMERA
-            }, MY_PERMISSION_REQUEST_CAMERA);
-        }
-    }
+//    private void requestCameraPermission() {
+//        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+//            Snackbar.make(mainLayout, "Camera access is required to display the camera preview.",
+//                    Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    ActivityCompat.requestPermissions(QrCodeActivity.this, new String[] {
+//                            Manifest.permission.CAMERA
+//                    }, MY_PERMISSION_REQUEST_CAMERA);
+//                }
+//            }).show();
+//        } else {
+//            Snackbar.make(mainLayout, "Permission is not available. Requesting camera permission.",
+//                    Snackbar.LENGTH_SHORT).show();
+//            ActivityCompat.requestPermissions(this, new String[] {
+//                    Manifest.permission.CAMERA
+//            }, MY_PERMISSION_REQUEST_CAMERA);
+//        }
+//    }
 
     private void initQRCodeReaderView() {
         View content = getLayoutInflater().inflate(R.layout.content_decoder, mainLayout, true);
@@ -212,15 +197,15 @@ public class QrCodeActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        if(_Status_Code != null) {
+//        if(_Status_Code != null) {
             mZBarView.getScanBoxView().setShowDefaultGridScanLineDrawable(false);
             mZBarView.getScanBoxView().setCustomScanLineDrawable(getResources().getDrawable(R.drawable.custom_scan_line));
 //            mZBarView.getScanBoxView().setBarcodeRectHeight(R.dimen.sps_lpr_sz_100);
-            mZBarView.getScanBoxView().setAutoZoom(true);
+            mZBarView.getScanBoxView().setAutoZoom(false);
 //            mZBarView.getScanBoxView().setRectWidth(R.dimen.sps_lpr_sz_100);
             mZBarView.getScanBoxView().setAnimTime(100);
 //            mZBarView.startCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
-        }
+//        }
             mZBarView.startCamera(Camera.CameraInfo.CAMERA_FACING_BACK);
         mZBarView.startSpotAndShowRect();
     }
@@ -230,8 +215,10 @@ public class QrCodeActivity extends AppCompatActivity
         setTitle(result);
         vibrate();
             Intent returnIntent = new Intent();
-            returnIntent.putExtra("result", result);
+            returnIntent.putExtra(RsultQrCode, result);
             setResult(Activity.RESULT_OK, returnIntent);
+
+            activityResult(result);
             finish();
 
         mZBarView.startSpot();
@@ -240,7 +227,8 @@ public class QrCodeActivity extends AppCompatActivity
     @Override
     public void onCameraAmbientBrightnessChanged(boolean isDark) {
         String tipText = mZBarView.getScanBoxView().getTipText();
-        String ambientBrightnessTip = "\nمحیط تاریک است، لطفا فلش را روشن کنید";
+//        String ambientBrightnessTip = "\nمحیط تاریک است، لطفا فلش را روشن کنید";
+        String ambientBrightnessTip = "\n Please on flashlight";
         if (isDark) {
             if (!tipText.contains(ambientBrightnessTip)) {
                 mZBarView.getScanBoxView().setTipText(tipText + ambientBrightnessTip);
@@ -257,18 +245,21 @@ public class QrCodeActivity extends AppCompatActivity
     public void onScanQRCodeOpenCameraError() {
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        mZBarView.showScanRect();
-
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY) {
-            final String picturePath = BGAPhotoPickerActivity.getSelectedPhotos(data).get(0);
-            mZBarView.decodeQRCode(picturePath);
-
-        }
-    }
-
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        mZBarView.showScanRect();
+//
+//        if (resultCode == RESULT_OK && null != data) {
+//            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+//            activityResult(result.get(0));
+//        }
+//
+//        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY) {
+//            final String picturePath = BGAPhotoPickerActivity.getSelectedPhotos(data).get(0);
+//            mZBarView.decodeQRCode(picturePath);
+//        }
+//    }
 
 }

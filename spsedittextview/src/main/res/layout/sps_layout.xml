@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@+id/rlyTop"
+<RelativeLayout android:id="@+id/viewBase"
     android:layout_margin="@dimen/sps_lpr_10"
     android:padding="@dimen/sps_lpr_5"
     android:background="@drawable/background_button_shape_2"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/sps_lpr_sz_60"
+    android:layout_height="wrap_content"
     tools:ignore="MissingConstraints"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,12 +14,13 @@
         android:id="@+id/cProgress"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:background="@android:color/transparent"
         android:foregroundGravity="top"
-        android:progress="70"
         android:indeterminateDrawable="@drawable/progress_indeterminate"
+        android:progress="70"
         android:progressDrawable="@drawable/progress_green"
         android:visibility="gone" />
 
@@ -38,9 +39,10 @@
     <LinearLayout
         android:id="@+id/rlyBtn"
         android:orientation="horizontal"
+        android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/mCnt"
