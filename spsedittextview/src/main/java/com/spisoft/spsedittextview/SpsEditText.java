@@ -247,6 +247,10 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
         return MText.getText().toString();
     }
 
+    public void SetText(String mText){
+        MText.setText(mText);
+    }
+
     public void SetHint(String mHint){
         MText.setHint(mHint);
     }
@@ -290,7 +294,7 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
         GetPermission(activity);
     }
 
-    public void GetPermission(final Activity activity){
+    private void GetPermission(final Activity activity){
         String pCAMERA = Manifest.permission.CAMERA;
         String pRECORD_AUDIO = Manifest.permission.RECORD_AUDIO;
         Collection<String> ListPermission = new ArrayList<>();
