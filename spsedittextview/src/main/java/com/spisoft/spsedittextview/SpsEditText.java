@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -67,6 +69,7 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
     private int REQ_CODE_QRCODE = 107;
     private boolean UseSpeechToText = true , UseBarcodeScanner = true;
     private RelativeLayout ViewBase;
+    OnChangeTextListener mListener;
 
     public SpsEditText(Context context) {
         super(context);
@@ -132,6 +135,24 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
                     MBtn.callOnClick();
                 }
                 return false;
+            }
+        });
+
+        MText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(mListener!=null)
+                    mListener.onEvent();
             }
         });
 
@@ -242,6 +263,14 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
         return super.onKeyDown(keyCode, event);
     }
     //-------------------------------- Function Attributes
+
+    public interface OnChangeTextListener {
+        void onEvent();
+    }
+
+    public void setOnChangeTextListener(OnChangeTextListener eventListener) {
+        mListener = eventListener;
+    }
 
     public String GetText(){
         return MText.getText().toString();
