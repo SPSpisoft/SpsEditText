@@ -169,6 +169,8 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
             final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SpsEditText, 0, 0);
 
             MText.setHint(typedArray.getString(R.styleable.SpsEditText_TextHint));
+            MText.setSingleLine(!typedArray.getBoolean(R.styleable.SpsEditText_MultiLine,false));
+
 //            ViewBase.setPadding(R.dimen.sps_lpr_5,R.dimen.sps_lpr_5,R.dimen.sps_lpr_5,R.dimen.sps_lpr_5);
             typedArray.recycle();
         }

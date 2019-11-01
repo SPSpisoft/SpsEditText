@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SpsEditText SET = findViewById(R.id.set);
+        final SpsEditText SET = findViewById(R.id.set);
         SET.SetHint("TEST");
         SET.SetUses(this, true, true);
 //        SET.SetBorder(getResources().getDrawable(R.drawable.background_button_shape_1),10);
@@ -25,6 +25,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this,"SSSS",Toast.LENGTH_SHORT).show();
+            }
+        });
+        SET.setOnChangeTextListener(new SpsEditText.OnChangeTextListener() {
+            @Override
+            public void onEvent() {
+                Toast.makeText(MainActivity.this,SET.GetText(),Toast.LENGTH_SHORT).show();
             }
         });
 
