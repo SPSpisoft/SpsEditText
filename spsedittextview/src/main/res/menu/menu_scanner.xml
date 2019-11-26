@@ -4,13 +4,13 @@
     tools:context="com.spisoft.sps.myapplication.ScrollingActivity">
 
     <item
-        android:id="@+id/action_switch_camera"
-        android:icon="@drawable/ic_camera_enhance_grey_600_24dp"
+        android:id="@+id/action_flash"
+        android:icon="@drawable/ic_flash_on_grey_500_24dp"
         android:title="flash light"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/action_flash"
-        android:icon="@drawable/ic_flash_on_grey_500_24dp"
+        android:id="@+id/action_switch_camera"
+        android:icon="@drawable/ic_camera_enhance_grey_600_24dp"
         android:title="flash light"
         app:showAsAction="always"/>
 

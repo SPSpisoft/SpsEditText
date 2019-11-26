@@ -10,7 +10,10 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application>
-        <activity android:name=".QrCodeActivity"></activity>
+        <activity
+            android:label="QRCode/Barcode Reader"
+            android:name=".QrCodeActivity">
+        </activity>
     </application>
 
 </manifest>

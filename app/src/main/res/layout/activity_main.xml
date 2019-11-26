@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,5 +17,15 @@
         tools:ignore="MissingConstraints">
     </com.spisoft.spsedittextview.SpsEditText>
 
+    <com.spisoft.spsedittextview.SpsEditText
+        android:id="@+id/set2"
+        android:layout_below="@+id/set"
+        android:background="@drawable/background_button_shape_2"
+        android:layout_margin="@dimen/sps_lpr_10"
+        android:padding="@dimen/sps_lpr_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+    </com.spisoft.spsedittextview.SpsEditText>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

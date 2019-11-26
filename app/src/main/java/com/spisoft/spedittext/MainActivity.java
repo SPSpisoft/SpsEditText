@@ -34,5 +34,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final SpsEditText SET2 = findViewById(R.id.set2);
+        SET2.SetHint("TEST 2");
+
     }
 }

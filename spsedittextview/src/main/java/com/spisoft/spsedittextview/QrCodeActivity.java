@@ -6,53 +6,36 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.hardware.Camera;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
-import com.google.android.material.snackbar.Snackbar;
-
-import java.util.ArrayList;
-
-import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
+import static android.view.View.GONE;
 import static com.spisoft.spsedittextview.GlobalCls.buildCounterRecDrawable;
-import static com.spisoft.spsedittextview.SpsEditText.RsultQrCode;
+import static com.spisoft.spsedittextview.SpsEditText.ResultQrCode;
 import static com.spisoft.spsedittextview.SpsEditText.TF_Holo;
-import static com.spisoft.spsedittextview.SpsEditText.activityResult;
 
 
 public class QrCodeActivity extends AppCompatActivity implements QRCodeView.Delegate {
-
-    private static final int MY_PERMISSION_REQUEST_CAMERA = 0;
-    private static final int REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY = 777;
 
     private ViewGroup mainLayout;
     private MenuItem flashSwitchItem, cameraSwitchItem;
     private boolean FlashIsChecked = false;
     private int CurrentCamera = Camera.CameraInfo.CAMERA_FACING_BACK;
-    private TextView TxtName, TxtPrice;
     private LinearLayout LlyShow;
     private ZXingView mZBarView;
-    private String _Status_Code = null;
 
     @Override
     protected void onSaveInstanceState (Bundle outState) {
         super.onSaveInstanceState(outState);
-//        outState.putCharSequence(EXTRA_STATUS_BARCODE_ACTIVITY, _Status_Code);
     }
 
     @Override
@@ -75,9 +58,8 @@ public class QrCodeActivity extends AppCompatActivity implements QRCodeView.Dele
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
             initQRCodeReaderView();
-//        } else {
-//            requestCameraPermission();
         }
+
     }
 
     @Override
@@ -111,10 +93,15 @@ public class QrCodeActivity extends AppCompatActivity implements QRCodeView.Dele
         if (id == R.id.action_switch_camera) {
             mZBarView.stopSpot();
             mZBarView.stopCamera();
-            if(CurrentCamera == Camera.CameraInfo.CAMERA_FACING_BACK)
+            if(CurrentCamera == Camera.CameraInfo.CAMERA_FACING_BACK) {
                 CurrentCamera = Camera.CameraInfo.CAMERA_FACING_FRONT;
-            else
+                flashSwitchItem.setIcon(buildCounterRecDrawable(QrCodeActivity.this, 0, R.string.ic_holo_flash_on, Color.YELLOW, 0, TF_Holo));
+                FlashIsChecked = false;
+                flashSwitchItem.setVisible(false);
+            }else {
                 CurrentCamera = Camera.CameraInfo.CAMERA_FACING_BACK;
+                flashSwitchItem.setVisible(true);
+            }
 
             mZBarView.startCamera(CurrentCamera);
             mZBarView.startSpotAndShowRect();
@@ -123,41 +110,6 @@ public class QrCodeActivity extends AppCompatActivity implements QRCodeView.Dele
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-//                                           @NonNull int[] grantResults) {
-//        if (requestCode != MY_PERMISSION_REQUEST_CAMERA) {
-//            return;
-//        }
-//
-//        if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//            Snackbar.make(mainLayout, "Camera permission was granted.", Snackbar.LENGTH_SHORT).show();
-//            initQRCodeReaderView();
-//        } else {
-//            Snackbar.make(mainLayout, "Camera permission request was denied.", Snackbar.LENGTH_SHORT).show();
-//        }
-//    }
-
-//    private void requestCameraPermission() {
-//        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-//            Snackbar.make(mainLayout, "Camera access is required to display the camera preview.",
-//                    Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    ActivityCompat.requestPermissions(QrCodeActivity.this, new String[] {
-//                            Manifest.permission.CAMERA
-//                    }, MY_PERMISSION_REQUEST_CAMERA);
-//                }
-//            }).show();
-//        } else {
-//            Snackbar.make(mainLayout, "Permission is not available. Requesting camera permission.",
-//                    Snackbar.LENGTH_SHORT).show();
-//            ActivityCompat.requestPermissions(this, new String[] {
-//                    Manifest.permission.CAMERA
-//            }, MY_PERMISSION_REQUEST_CAMERA);
-//        }
-//    }
-
     private void initQRCodeReaderView() {
         View content = getLayoutInflater().inflate(R.layout.content_decoder, mainLayout, true);
 
@@ -165,17 +117,7 @@ public class QrCodeActivity extends AppCompatActivity implements QRCodeView.Dele
         mZBarView.setDelegate(this);
 
         LlyShow = content.findViewById(R.id.llyShow);
-        TxtName = (TextView) content.findViewById(R.id.txt_name);
-        TxtPrice = (TextView) content.findViewById(R.id.txt_price);
-
-//        TxtName.setTypeface(TF_BMitra);
-//        TxtPrice.setTypeface(TF_Tahoma);
     }
-
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//    }
 
     private void vibrate() {
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
@@ -197,16 +139,11 @@ public class QrCodeActivity extends AppCompatActivity implements QRCodeView.Dele
     @Override
     protected void onStart() {
         super.onStart();
-//        if(_Status_Code != null) {
-            mZBarView.getScanBoxView().setShowDefaultGridScanLineDrawable(false);
-            mZBarView.getScanBoxView().setCustomScanLineDrawable(getResources().getDrawable(R.drawable.custom_scan_line));
-//            mZBarView.getScanBoxView().setBarcodeRectHeight(R.dimen.sps_lpr_sz_100);
-            mZBarView.getScanBoxView().setAutoZoom(false);
-//            mZBarView.getScanBoxView().setRectWidth(R.dimen.sps_lpr_sz_100);
-            mZBarView.getScanBoxView().setAnimTime(100);
-//            mZBarView.startCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
-//        }
-            mZBarView.startCamera(Camera.CameraInfo.CAMERA_FACING_BACK);
+        mZBarView.getScanBoxView().setShowDefaultGridScanLineDrawable(false);
+        mZBarView.getScanBoxView().setCustomScanLineDrawable(getResources().getDrawable(R.drawable.custom_scan_line));
+        mZBarView.getScanBoxView().setAutoZoom(false);
+        mZBarView.getScanBoxView().setAnimTime(100);
+        mZBarView.startCamera(Camera.CameraInfo.CAMERA_FACING_BACK);
         mZBarView.startSpotAndShowRect();
     }
 
@@ -214,20 +151,18 @@ public class QrCodeActivity extends AppCompatActivity implements QRCodeView.Dele
     public void onScanQRCodeSuccess(String result) {
         setTitle(result);
         vibrate();
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra(RsultQrCode, result);
-            setResult(Activity.RESULT_OK, returnIntent);
-
-            activityResult(result);
-            finish();
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(ResultQrCode, result);
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
 
         mZBarView.startSpot();
     }
 
+
     @Override
     public void onCameraAmbientBrightnessChanged(boolean isDark) {
         String tipText = mZBarView.getScanBoxView().getTipText();
-//        String ambientBrightnessTip = "\nمحیط تاریک است، لطفا فلش را روشن کنید";
         String ambientBrightnessTip = "\n Please on flashlight";
         if (isDark) {
             if (!tipText.contains(ambientBrightnessTip)) {
@@ -244,22 +179,5 @@ public class QrCodeActivity extends AppCompatActivity implements QRCodeView.Dele
     @Override
     public void onScanQRCodeOpenCameraError() {
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        mZBarView.showScanRect();
-//
-//        if (resultCode == RESULT_OK && null != data) {
-//            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-//            activityResult(result.get(0));
-//        }
-//
-//        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY) {
-//            final String picturePath = BGAPhotoPickerActivity.getSelectedPhotos(data).get(0);
-//            mZBarView.decodeQRCode(picturePath);
-//        }
-//    }
 
 }

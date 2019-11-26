@@ -5,13 +5,6 @@
         <attr name="BorderPadding" format="dimension"/>
         <attr name="BorderMargin" format="dimension"/>
         <attr name="MultiLine" format="boolean"/>
-<!--        <attr name="UseSpeechToText" format="boolean"/>-->
-<!--        <attr name="UseBarcodeScanner" format="boolean"/>-->
     </declare-styleable>
 
-<!--    <declare-styleable name="MyCustomView">-->
-<!--        <attr name="android:text"/>-->
-<!--        <attr name="android:textColor"/>-->
-<!--        <attr name="extraInformation" format="string" />-->
-<!--    </declare-styleable>-->
 </resources>

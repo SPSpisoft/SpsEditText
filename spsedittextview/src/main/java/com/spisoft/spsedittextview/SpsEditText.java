@@ -1,13 +1,14 @@
 package com.spisoft.spsedittextview;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -30,8 +31,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Dimension;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.github.johnkil.print.PrintView;
 import com.karumi.dexter.Dexter;
@@ -48,19 +52,14 @@ import java.util.Locale;
 
 public class SpsEditText extends RelativeLayout implements RecognitionListener {
 
-//    public static String EXTRA_STATUS_BARCODE_ACTIVITY = "ExtraStatusBarcodeActivity";
-//    public static String BARCPDE_READER_PLACE = "BarcodeReaderPlace";
-//    public static String BARCPDE_READER_BARCODE = "BarcodeReaderBarcode";
-
-    public static String RsultQrCode = "RsultQrCode";
+    public static String ResultQrCode = "ResultQrCode";
     public static Typeface TF_Holo ;
     private InputMethodManager imm;
     private boolean SpeechStatus = false;
     private SpeechRecognizer speechRecognizer;
-
     private View rootView;
     private ProgressBar circleProgress;
-    private static EditText MText;
+    private EditText MText;
     private TextView MCnt;
     private PrintView MBtn;
     private PrintView MBtnVoice;
@@ -91,6 +90,11 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    @Override
+    protected void onFocusChanged(boolean gainFocus, int direction, @Nullable Rect previouslyFocusedRect) {
+        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
+    }
+
     private void init(final Context context, AttributeSet attrs){
 
         mContext = context;
@@ -117,17 +121,8 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
                 promptSpeechInput(context);
             }
         });
-//        MBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(!MText.getText().toString().trim().equals("")) {
-//                    ButtonPlusOnClick();
-//                }
-//            }
-//        });
-//        MBtn.setOnClickListener(ButtonPlusOnClick());
-        MBtn.setVisibility(GONE);
 
+        MBtn.setVisibility(GONE);
         MText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -161,7 +156,12 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
             public void onClick(View v) {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 Intent intentQR = new Intent(context, QrCodeActivity.class);
-                ((Activity) context).startActivityForResult(intentQR, REQ_CODE_QRCODE,ActivityOptions.makeCustomAnimation(context, R.anim.animate_zoom_enter, R.anim.animate_zoom_exit).toBundle());
+                myStartActivityForResult((FragmentActivity) getContext(), intentQR, REQ_CODE_QRCODE, new OnActivityResult() {
+                    @Override
+                    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+                        if(data != null) MText.setText(data.getStringExtra(ResultQrCode));
+                    }
+                });
             }
         });
 
@@ -171,13 +171,8 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
             MText.setHint(typedArray.getString(R.styleable.SpsEditText_TextHint));
             MText.setSingleLine(!typedArray.getBoolean(R.styleable.SpsEditText_MultiLine,false));
 
-//            ViewBase.setPadding(R.dimen.sps_lpr_5,R.dimen.sps_lpr_5,R.dimen.sps_lpr_5,R.dimen.sps_lpr_5);
             typedArray.recycle();
         }
-    }
-
-    public static void activityResult(String mCode){
-        MText.setText(mCode);
     }
 
     private void promptSpeechInput(Context context) {
@@ -264,6 +259,7 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
         }
         return super.onKeyDown(keyCode, event);
     }
+
     //-------------------------------- Function Attributes
 
     public interface OnChangeTextListener {
@@ -284,22 +280,6 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
 
     public void SetHint(String mHint){
         MText.setHint(mHint);
-    }
-
-    public void SetBorder(Drawable drawable, int padding){
-        ViewBase.setBackground(drawable);
-//        ViewBase.setPadding(padding,padding,padding,padding);
-        RelativeLayout.LayoutParams mParams = new RelativeLayout.LayoutParams(
-                new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        Resources r = mContext.getResources();
-        int px = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                padding,
-                r.getDisplayMetrics()
-        );
-        mParams.setMargins(px, px, px, px);
-        ViewBase.setLayoutParams(mParams);
-        ViewBase.requestLayout();
     }
 
     public View ButtonPlusView(Object mTag){
@@ -362,7 +342,33 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
                 }
             }
         }).check();
-
     }
 
+    //-------------------------------------------- Activity Result --------------------------------------------------
+    public static void myStartActivityForResult(FragmentActivity act, Intent in, int requestCode, OnActivityResult cb) {
+        Fragment aux = new FragmentForResult(cb);
+        FragmentManager fm = act.getSupportFragmentManager();
+        fm.beginTransaction().add(aux, "FRAGMENT_TAG").commit();
+        fm.executePendingTransactions();
+        aux.startActivityForResult(in, requestCode);
+    }
+
+    public interface OnActivityResult {
+        void onActivityResult(int requestCode, int resultCode, Intent data);
+    }
+
+    @SuppressLint("ValidFragment")
+    public static class FragmentForResult extends Fragment {
+        private OnActivityResult cb;
+        public FragmentForResult(OnActivityResult cb) {
+            this.cb = cb;
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (cb != null) cb.onActivityResult(requestCode, resultCode, data);
+            super.onActivityResult(requestCode, resultCode, data);
+            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+        }
+    }
 }
