@@ -59,6 +59,7 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
     private SpeechRecognizer speechRecognizer;
     private View rootView;
     private ProgressBar circleProgress;
+    private String MLanguage;
     private EditText MText;
     private TextView MCnt;
     private PrintView MBtn;
@@ -118,7 +119,7 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
         MBtnVoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                promptSpeechInput(context);
+                promptSpeechInput(context, MLanguage);
             }
         });
 
@@ -175,7 +176,7 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
         }
     }
 
-    private void promptSpeechInput(Context context) {
+    private void promptSpeechInput(Context context, String... language) {
         imm.hideSoftInputFromWindow(MText.getWindowToken(), 0);
         if(SpeechStatus) {
             MBtnVoice.setIconColor(Color.GRAY);
@@ -188,7 +189,7 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
             speechRecognizer.setRecognitionListener(this);
             Intent speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-            speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+            speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language == null ? Locale.getDefault() : language);
             speechIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS ,true);
             speechRecognizer.startListening(speechIntent);
         }
@@ -254,7 +255,7 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_HEADSETHOOK){
-            promptSpeechInput(mContext);
+            promptSpeechInput(mContext, MLanguage);
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -280,6 +281,10 @@ public class SpsEditText extends RelativeLayout implements RecognitionListener {
 
     public void SetHint(String mHint){
         MText.setHint(mHint);
+    }
+
+    public void SetLanguage(String mLanguage){
+        MLanguage = (mLanguage);
     }
 
     public View ButtonPlusView(Object mTag){
